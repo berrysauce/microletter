@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #eef4f7;">
+    <style>
+        #newsletter-title {
+            color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            font-size: 40px;
+            margin-top: 15px;
+        }
+        #newsletter-tagline {
+            color: rgb(58, 53, 5);
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            margin-top: -20px;
+        }
+        #header {
+            background-image: linear-gradient(120deg, rgb(199, 199, 199) , rgb(228, 228, 228));;
+            border-color: #eef4f7;
+            border-style: solid;
+            border-radius: 10px;
+            padding: 20px;
+            height: 100px;
+        }
+        #main {
+            background-color: #ffffff;
+            border-color: #eef4f7;
+            border-style: solid;
+            border-radius: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #main-text {
+            color: darkslategrey;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        #footer {
+            background-color: #eef4f7;
+        }
+        #footer-text {
+            color: darkslategrey;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        p {
+            color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            text-align: left;
+        }
+        container {
+            margin-top: 20px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    </style>
+    <body style="background: #eef4f7;;">
+        <container>
+            <div id="header">
+                <h1 id="newsletter-title">Verify your Email</h1>
+                <p id="newsletter-tagline">for {{ newsletter_title }}</p>
+            </div>
+        </container>
+        <container>
+            <div id="main">
+                <p id="main-text">
+                    Please verify your Email to subscribe to {{ newsletter_title }}. If you don't verify your Email, you won't be subscribed.<br>
+                    If you haven't subscribed to {{ newsletter_title }} ignore this Email.<br>
+                    <br>
+                    <a href="{{ subscribe_link }}"> Subscribe to {{ newsletter_title }}</a><br>
+                    or copy this link: {{ subscribe_link }}<br>
+                    <br>
+                    Have a nice day!
+                </p>
+            </div>
+        </container>
+        <container>
+            <div id="footer">
+                <p id=footer-text>{{ footer_address }}</p>
+                <p id=footer-text>You received this email because you subscribed to "{{ newsletter_title }}".<br>Copyright {{ footer_year }} {{ newsletter_title }}</p>
+            </div>
+        </container>
+    </body>
+</html>

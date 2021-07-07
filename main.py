@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request, Form, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from datetime import datetime
 from typing import Optional
 import markdown
@@ -187,6 +188,15 @@ async def get_subscriber_delete(key: str):
 async def get_home_delete(key: str):
     posts.delete(key)
     return RedirectResponse(url="/dashboard/home/?show=success", status_code=status.HTTP_303_SEE_OTHER)
+
+@app.exception_handler(StarletteHTTPException)
+async def my_custom_exception_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        return templates.TemplateResponse('errcode.html', {'request': request, "error_code": "404", "error_description": "The requested resource couldn't be found."})
+    elif exc.status_code == 500:
+        return templates.TemplateResponse('error.html', {'request': request, "title": "500", "description": exc.detail})
+    else:
+        return templates.TemplateResponse('error.html', {'request': request, "title": "Error", "description": exc.detail})
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ subscribers = deta.Base("microletter-subscribers")
 posts = deta.Base("microletter-posts")
 
 def postcode():
-    entries = next(posts.fetch(None))
+    entries = posts.fetch(None).items
     """
     entries = [
         {

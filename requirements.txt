@@ -5,3 +5,5 @@ html2text
 jinja2
 deta
 python-dotenv
+aiofiles
+python-multipart

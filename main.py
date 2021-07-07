@@ -55,7 +55,7 @@ async def get_root():
 
 @app.post("/subscribe")
 async def post_subscribe(request: Request, email: str = Form(...)):
-    if len(next(subscribers.fetch({"email": email}))) != 0:
+    if len(subscribers.fetch({"email": email}).items) != 0:
         title = "You're already subscribed!"
         description = "This email is already on our list. Even if you love this newsletter, you can't subscribe two times!"
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
@@ -121,9 +121,9 @@ async def get_unsubscribe(request: Request, key: str, finalize: Optional[bool] =
 @app.get("/subscribers")
 async def get_subscribers(verified: Optional[bool] = True):
     if verified is True:
-        subscribed = next(subscribers.fetch({"verified": True}))
+        subscribed = subscribers.fetch({"verified": True}).items
     else:
-        subscribed = next(subscribers.fetch({"verified": False}))
+        subscribed = subscribers.fetch({"verified": False}).items
     return subscribed
 
 @app.get("/dashboard")
@@ -148,8 +148,8 @@ async def get_editor():
     return HTMLResponse(content=html_content, status_code=200)
 
 @app.post("/dashboard/editor/create", response_class=HTMLResponse)
-async def post_create(request: Request, title: str = Form(...), content: Optional[str] = Form(None)):
-    if content is None:
+async def post_create(request: Request, title: str = Form(None), content: Optional[str] = Form(None)):
+    if content is None or title is None:
         title = "Your post can't be empty!"
         description = "Sorry, but you can't create a post without content. Please go back and fill out the content field to send your post."
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})

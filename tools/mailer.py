@@ -13,6 +13,7 @@ import os
 load_dotenv()
 email_token = os.getenv("EMAIL_TOKEN")
 deta = Deta(os.getenv("DETA_TOKEN"))
+deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
 subscribers = deta.Base("microletter-subscribers")
 
@@ -27,7 +28,7 @@ def verify(email: str, key: str):
     
     email_data={
         "newsletter_title": "Paul's Newsletter",                                   # REPLACE WITH CONFIG DATA
-        "subscribe_link": "localhost/verify/{0}".format(key),
+        "subscribe_link": "{0}/verify/{1}".format(deta_url, key),
         "footer_address": "Musterstr. 1a, 01234 Musterstadt, Musterland",          # REPLACE WITH CONFIG DATA
         "footer_year": str(datetime.now().strftime("%Y"))
     }
@@ -54,7 +55,7 @@ def send(data):
     message = MIMEMultipart("alternative")
     message["Subject"] = "{0} | {1}".format(data["post_title"], "Paul's Newsletter") # REPLACE WITH CONFIG DATA
     
-    entries = next(subscribers.fetch({"verified": True}))
+    entries = subscribers.fetch({"verified": True}).items
     with open("templates/emails/newsletter.html", "r") as f:
             html_content = jinja2.Template(f.read())
     
@@ -69,7 +70,7 @@ def send(data):
             "post_title": data["post_title"],
             "post_date": data["post_date"],
             "post_content": data["post_content"],
-            "footer_unsubscribe": "localhost/unsubscribe/{0}".format(entry["key"]),
+            "footer_unsubscribe": "{0}/unsubscribe/{1}".format(deta_url, entry["key"]),
             "footer_address": "Musterstr. 1a, 01234 Musterstadt, Musterland",           # REPLACE WITH CONFIG DATA
             "footer_year": str(datetime.now().strftime("%Y"))
         }

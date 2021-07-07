@@ -7,3 +7,4 @@ deta
 python-dotenv
 aiofiles
 python-multipart
+lxml

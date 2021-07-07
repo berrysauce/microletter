@@ -12,3 +12,6 @@ EMAIL_TOKEN=YOURGOOGLEPASSWORD
 ```
 5. Install all Python dependencies with `pip install -r requirements.txt` (make sure `pip -v` returns a version above 3.x - if not use `pip3 install -r requirements.txt`)
 6. Run the code with `python main.py` (or with `python3 main.py` if `pip -v` returned a version under 3.x)
+
+## How to use
+Go to yourdomain.com/dashboard and you'll be redirected to your dashboard.

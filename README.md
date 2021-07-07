@@ -1,4 +1,4 @@
-[center][url=https://imgbb.com/][img]https://i.ibb.co/DYmRTgW/githublogo.png[/img][/url][/center]
+<p align="center"><a href="https://imgbb.com/"><img src="https://i.ibb.co/wz12ysJ/githublogo-big.png" alt="githublogo-big" border="0"></a></p>
 
 # microletter
 A micro newsletter service 📨

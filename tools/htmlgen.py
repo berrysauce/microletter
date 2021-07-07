@@ -43,5 +43,19 @@ def postcode():
             }
             posts_html = posts_html + posts_html_template.render(data)
     return posts_html
-            
+
+def subscribertable():
+    entries = subscribers.fetch({"verified": True}).items
+    month = str(datetime.now().strftime("%B %Y"))
+    total_subscribers = len(entries)
+    monthly_subscribers = 0
+    table_html = """"""
+    
+    for entry in entries:
+        if month in entry["subscribed_on"]:
+            monthly_subscribers += 1
+        delete_link = "/dashboard/subscribers/delete/{0}".format(entry["key"])
+        table_html = table_html + """<tr><td>{0}</td><td>{1}</td><td class="d-xxl-flex justify-content-xxl-end"><a class="btn btn-primary" role="button" style="background: var(--bs-red);border-color: var(--bs-red);border-radius: 5px;font-size: 12px;" href="{2}"><strong>REMOVE</strong></a></td></tr>""".format(entry["email"], entry["subscribed_on"], delete_link)
+        
+    return table_html, total_subscribers, monthly_subscribers  
             

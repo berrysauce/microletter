@@ -1,7 +1,7 @@
 fastapi
 uvicorn
 markdown
-html2text
+beautifulsoup4
 jinja2
 deta
 python-dotenv

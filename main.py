@@ -6,12 +6,12 @@ from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from typing import Optional
 import markdown
-import html2text
 import jinja2
 from tools import mailer, htmlgen
 from deta import Deta
 from dotenv import load_dotenv
 import os
+from bs4 import BeautifulSoup
 
 load_dotenv()
 app = FastAPI()
@@ -25,20 +25,6 @@ templates = Jinja2Templates(directory="templates")
 subscribers = deta.Base("microletter-subscribers")
 posts = deta.Base("microletter-posts")
 config = deta.Base("microletter-config")
-
-subscribed = []
-
-"""
-# MARKDOWN TO TEXT
-from BeautifulSoup import BeautifulSoup
-from markdown import markdown
-
-html = markdown(some_html_string)
-text = ''.join(BeautifulSoup(html).findAll(text=True))
-
-# REPLACE DIVS WITH TABLES FOR NEWSLETTER TEMPLATE
-"""
-
 
 
 """
@@ -118,14 +104,6 @@ async def get_unsubscribe(request: Request, key: str, finalize: Optional[bool] =
 --------------------------------------------------------------------------------------
 """
 
-@app.get("/subscribers")
-async def get_subscribers(verified: Optional[bool] = True):
-    if verified is True:
-        subscribed = subscribers.fetch({"verified": True}).items
-    else:
-        subscribed = subscribers.fetch({"verified": False}).items
-    return subscribed
-
 @app.get("/dashboard")
 async def get_dashboard():
     return RedirectResponse("/dashboard/home")
@@ -156,10 +134,8 @@ async def post_create(request: Request, title: str = Form(None), content: Option
     
     date = str(datetime.now().strftime("%d. %B %Y"))
     html_content = markdown.markdown(content)
-    converter = html2text.HTML2Text()
-    # Ignore converting links from HTML
-    converter.ignore_links = True
-    text_content = converter.handle(html_content)
+    soup = BeautifulSoup(html_content, 'lxml')
+    text_content = soup.get_text()
     excerpt = text_content[:50] + "..."
     email_data={
         "post_title": title,
@@ -183,8 +159,16 @@ async def post_create(request: Request, title: str = Form(None), content: Option
     return RedirectResponse(url="/dashboard/home/?show=success", status_code=status.HTTP_303_SEE_OTHER)
 
 @app.get("/dashboard/subscribers", response_class=HTMLResponse)
-async def get_subscribers(request: Request):
-    return templates.TemplateResponse("newsletter.html", newsletter_data)
+async def get_subscribers(request: Request, show: Optional[str] = None):
+    if show == "success":
+        popup_html = """<div role="alert" class="alert alert-success" style="margin-top: 10px;margin-bottom: 10px;"><span><strong>Done!</strong><br /></span></div>"""
+    elif show == "error":
+        popup_html = """<div role="alert" class="alert alert-danger" style="margin-top: 10px;margin-bottom: 10px;"><span><strong>Error</strong><br /></span></div>"""
+    else:
+        popup_html = """"""
+    
+    subscribers_html, total, monthly = htmlgen.subscribertable()
+    return templates.TemplateResponse("subscribers.html", {"request": request, "popup": popup_html, "total_subscribers": total, "monthly_subscribers": monthly, "subscribers": subscribers_html})
 
 
 

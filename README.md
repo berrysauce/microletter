@@ -17,3 +17,7 @@ EMAIL_TOKEN=YOURGOOGLEPASSWORD
 
 ## How to use
 Go to yourdomain.com/dashboard and you'll be redirected to your dashboard.
+
+## Credits
+- A part of the code in tools/mailer.py was found at https://realpython.com/python-send-email/
+- Thanks to the makers and contributers of FastAPI - without you this wouldn't have been possible

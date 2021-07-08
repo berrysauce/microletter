@@ -12,22 +12,6 @@ posts = deta.Base("microletter-posts")
 
 def postcode():
     entries = posts.fetch(None).items
-    """
-    entries = [
-        {
-            "key": "83ihdjgfu3t7",
-            "title": "Awesome post",
-            "date": "04. July 2021",
-            "excerpt": "This is a cool little test post."
-        },
-        {
-            "key": "83284h3bb23b",
-            "title": "Second awesome post",
-            "date": "04. July 2021",
-            "excerpt": "This is a cool, second, and of course, little test post."
-        }
-    ]
-    """
     if len(entries) == 0:
         posts_html = """<p>You have no posts</p>"""
     else:

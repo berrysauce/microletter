@@ -11,6 +11,7 @@ A micro newsletter service 📨
 ```
 DETA_TOKEN=YOURDETATOKEN
 EMAIL_TOKEN=YOURGOOGLEPASSWORD
+EMAIL_ADDRESS=YOURGMAILADDRESS
 ```
 5. Install all Python dependencies with `pip install -r requirements.txt` (make sure `pip -v` returns a version above 3.x - if not use `pip3 install -r requirements.txt`)
 6. Run the code with `python main.py` (or with `python3 main.py` if `pip -v` returned a version under 3.x)

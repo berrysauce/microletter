@@ -35,11 +35,9 @@ config = deta.Base("microletter-config")
 --------------------------------------------------------------------------------------
 """
 
-@app.get("/", response_class=HTMLResponse)
-async def get_root():
-    with open("templates/index.html", "r") as f:
-        html_content = f.read()
-    return HTMLResponse(content=html_content, status_code=200)
+@app.get("/")
+async def get_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request, "newsletter_title": "Pauls Newsletter", "newsletter_description": "This is a little newsletter to demo what microletter can do. Since I don't know what else to put here, I added this sentence.", "privacy_link": "/privacy", "footer_year": str(datetime.now().strftime("%Y"))})
 
 @app.post("/subscribe")
 async def post_subscribe(request: Request, email: str = Form(...)):

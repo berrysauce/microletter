@@ -11,17 +11,15 @@ import os
 # Credit/Thanks to RealPython
 
 load_dotenv()
-email_token = os.getenv("EMAIL_TOKEN")
-email_address = os.getenv("EMAIL_ADDRESS")
 deta = Deta(os.getenv("DETA_TOKEN"))
 deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
 subscribers = deta.Base("microletter-subscribers")
 
 def verify(email: str, key: str):
-    sender_email = email_address                                     # REPLACE WITH CONFIG DATA 
+    sender_email = str(os.getenv("EMAIL_ADDRESS"))                                   # REPLACE WITH CONFIG DATA 
     receiver_email = email
-    password = str(email_token)
+    password = str(os.getenv("EMAIL_TOKEN"))
     message = MIMEMultipart("alternative")
     message["Subject"] = "Verify your Email - {0}".format("Paul's Newsletter")     # REPLACE WITH CONFIG DATA
     message["From"] = sender_email
@@ -51,8 +49,8 @@ def verify(email: str, key: str):
     return True
 
 def send(data):
-    sender_email = email_address                                      # REPLACE WITH CONFIG DATA 
-    password = str(email_token)
+    sender_email = str(os.getenv("EMAIL_ADDRESS"))                                   # REPLACE WITH CONFIG DATA 
+    password = str(os.getenv("EMAIL_TOKEN"))
     message = MIMEMultipart("alternative")
     message["Subject"] = "{0} | {1}".format(data["post_title"], "Paul's Newsletter") # REPLACE WITH CONFIG DATA
     

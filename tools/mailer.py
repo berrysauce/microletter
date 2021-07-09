@@ -19,8 +19,8 @@ deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 subscribers = deta.Base("microletter-subscribers")
 
 def verify(email: str, key: str):
-    sender_email = "haedrich.paul@gmail.com"                                       # REPLACE WITH CONFIG DATA 
-    receiver_email = email_address
+    sender_email = email_address                                     # REPLACE WITH CONFIG DATA 
+    receiver_email = email
     password = str(email_token)
     message = MIMEMultipart("alternative")
     message["Subject"] = "Verify your Email - {0}".format("Paul's Newsletter")     # REPLACE WITH CONFIG DATA

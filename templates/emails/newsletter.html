@@ -9,29 +9,31 @@
             margin-top: 15px;
         }
         #newsletter-tagline {
-            color: rgb(58, 53, 5);
+            color: rgb(65, 65, 65);
             font-family: Arial, Helvetica, sans-serif;
             font-size: 20px;
             text-align: center;
             margin-top: -20px;
         }
         #header {
-            background-image: linear-gradient(120deg, rgb(221, 221, 13) , rgb(235, 203, 21));;
-            border-color: #eef4f7;
-            border-style: solid;
+            background-image: linear-gradient(120deg, rgb(241, 241, 63) , rgb(235, 203, 21));;
             border-radius: 10px;
             padding: 20px;
             height: 100px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
         #post {
             background-color: #ffffff;
-            border-color: #eef4f7;
-            border-style: solid;
             border-radius: 10px;
             padding-left: 20px;
             padding-right: 20px;
             padding-top: 10px;
             padding-bottom: 10px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
         #post-title {
             color: rgb(0, 0, 0);
@@ -48,7 +50,9 @@
             margin-bottom: 30px;
         }
         #footer {
-            background-color: #eef4f7;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto,
         }
         #footer-text {
             color: darkslategrey;
@@ -71,27 +75,39 @@
     </style>
     <body style="background: #eef4f7;;">
         <container>
-            <div id="header">
-                <h1 id="newsletter-title">{{ newsletter_title }}</h1>
-                <p id="newsletter-tagline">{{ newsletter_tagline }}</p>
-            </div>
+            <table id="header">
+                <tbody>
+                    <td>
+                        <h1 id="newsletter-title">{{ newsletter_title }}</h1>
+                        <p id="newsletter-tagline">{{ newsletter_tagline }}</p>
+                    </td>
+                </tbody>
+            </table>
         </container>
         <container>
-            <div id="post">
-                <h1 id="post-title">{{ post_title }}</h1>
-                <p id="post-date">{{ post_date }}</p>
-                <div>
-                    {% autoescape false %}
-                    {{ post_content }}
-                    {% endautoescape %}
-                </div>
-            </div>
+            <table id="post">
+                <tbody>
+                    <td>
+                        <h1 id="post-title">{{ post_title }}</h1>
+                        <p id="post-date">{{ post_date }}</p>
+                        <div>
+                            {% autoescape false %}
+                            {{ post_content }}
+                            {% endautoescape %}
+                        </div>
+                    </td>
+                </tbody>
+            </table>
         </container>
         <container>
-            <div id="footer">
-                <p id=footer-text>{{ footer_address }}</p>
-                <p id=footer-text>You received this email because you subscribed to "{{ newsletter_title }}".<br>Copyright {{ footer_year }} {{ newsletter_title }} | <a href="{{ footer_unsubscribe }}">Unsubscribe</a></p>
-            </div>
+            <table id="footer">
+                <tbody>
+                    <td>
+                        <p id=footer-text>{{ footer_address }}</p>
+                        <p id=footer-text>You received this email because you subscribed to "{{ newsletter_title }}".<br>Copyright {{ footer_year }} {{ newsletter_title }} | <a href="{{ footer_unsubscribe }}">Unsubscribe</a></p>
+                    </td>
+                </tbody>
+            </table>
         </container>
     </body>
 </html>

@@ -15,6 +15,8 @@ def postcode():
     if len(entries) == 0:
         posts_html = """<p>You have no posts</p>"""
     else:
+        entries.sort(key = lambda x:x["date"])
+        entries = entries[::-1]
         posts_html = """"""
         with open("templates/elements/post_card.html", "r") as f:
             posts_html_template = jinja2.Template(f.read())
@@ -34,6 +36,10 @@ def subscribertable():
     total_subscribers = len(entries)
     monthly_subscribers = 0
     table_html = """"""
+    
+    if len(entries) != 0:
+        entries.sort(key = lambda x:x["subscribed_on"])
+        entries = entries[::-1]
     
     for entry in entries:
         if month in entry["subscribed_on"]:

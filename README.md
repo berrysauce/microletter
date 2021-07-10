@@ -27,4 +27,4 @@ Go to yourdomain.com/dashboard and you'll be redirected to your dashboard.
 ## License
 Currently, microletter is licensed under Copyright. This might change later.
 
-© 2021, Paul Haedrich (berrysauce). All rights reserved. 
+© (Copyright) 2021, Paul Haedrich (berrysauce). All rights reserved. 

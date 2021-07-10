@@ -1,12 +1,16 @@
-<div class="card" style="border-width: 2px;border-color: rgb(239,239,239);border-radius: 5px;margin-top: 20px;">
-    <div class="card-body" style="padding-right: 30px;padding-left: 30px;padding-top: 25px;padding-bottom: 25px;border-width: 0px;">
+<div class="card" style="border-width: 2px; border-color: rgb(239, 239, 239); border-radius: 5px; margin-top: 20px;">
+    <div class="card-body" style="padding-right: 30px; padding-left: 30px; padding-top: 25px; padding-bottom: 25px; border-width: 0px;">
         <div class="row">
             <div class="col">
                 <h4>{{ title }}<br /></h4>
                 <h6 class="text-muted mb-2">{{ date }}</h6>
             </div>
-            <div class="col-xxl-4 d-xxl-flex justify-content-xxl-end align-items-xxl-center"><a class="btn btn-primary" role="button" style="padding-top: 10px;padding-bottom: 10px;padding-right: 14px;padding-left: 14px;font-size: 12px;background: var(--bs-red);" href="{{ delete_link }}">DELETE FROM DASHBOARD</a></div>
+            <div class="col-xxl-4 d-xxl-flex justify-content-xxl-end align-items-xxl-center">
+                <a class="btn btn-primary" role="button" style="padding-top: 10px; padding-bottom: 10px; padding-right: 14px; padding-left: 14px; font-size: 12px; background: var(--bs-red);" href="{{ delete_link }}">
+                    DELETE FROM DASHBOARD
+                </a>
+            </div>
         </div>
-        <p class="card-text" style="margin-top: 25px;margin-bottom: 15px;">{{ excerpt }}<br /></p>
+        <p class="card-text" style="margin-top: 25px; margin-bottom: 15px;">{{ excerpt }}<br /></p>
     </div>
 </div>

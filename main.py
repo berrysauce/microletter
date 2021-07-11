@@ -21,6 +21,7 @@ deta = Deta(os.getenv("DETA_TOKEN"))
 app.mount("/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/unsubscribe/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/verify/assets", StaticFiles(directory="templates/assets"), name="assets")
+app.mount("/unsubscribe/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/dashboard/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/dashboard/editor/assets", StaticFiles(directory="templates/assets"), name="assets")
 templates = Jinja2Templates(directory="templates")
@@ -81,9 +82,9 @@ async def get_verify(request: Request, key: str):
         description = "Your email couldn't be verified. Please try again later by clicking on the link in the verification email you've received."
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
 
-@app.get("/unsubscribe/{key}")
-async def get_unsubscribe(request: Request, key: str, finalize: Optional[bool] = False):
-    if finalize is True: 
+@app.get("/unsubscribe")
+async def get_unsubscribe(request: Request, key: Optional[str] = None):
+    if key is not None:
         try:
             subscribers.delete(key)
             title = "Successfully unsubscribed!"
@@ -93,8 +94,9 @@ async def get_unsubscribe(request: Request, key: str, finalize: Optional[bool] =
             title = "There was a problem with unsubscribing you"
             description = "There was an error while unsubscribing you. Try again later or contact the newsletter owner to get unsubscribed manually."
             return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
-    entry = subscribers.get(key)
-    return templates.TemplateResponse("unsubscribe.html", {"request": request, "email": entry["email"], "date": entry["subscribed_on"]})
+    with open("templates/unsubscribe.html", "r") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content, status_code=200)
 
     
 
@@ -177,6 +179,22 @@ async def get_subscribers(request: Request, show: Optional[str] = None):
                                     BACK END
 --------------------------------------------------------------------------------------
 """
+
+@app.post("/unsubscribe/send")
+async def post_unsubscribe_send(request: Request, email: str = Form(...)):
+    entry = subscribers.fetch({"email": email}).items
+    if len(entry) == 0:
+        title = "This user isn't subscribed!"
+        description = "Sorry, but the email couldn't be found in our database."
+        return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
+    if mailer.unsubscribe(email, entry[0]["key"]) is True:
+        title = "Last step: Confirm that you want to Unsubscribe"
+        description = "We've sent you an email containing a link to unsubscribe. Sorry, but this is a security measure."
+        return templates.TemplateResponse("success.html", {"request": request, "title": title, "description": description})
+    else:
+        title = "There was an error sending the confirmation email"
+        description = "Sorry but the unsubscribe confirmation email couldn't be sent. Please try again later."
+        return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
 
 @app.get("/dashboard/subscribers/delete/{key}")
 async def get_subscriber_delete(key: str):

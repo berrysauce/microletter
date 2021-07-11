@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #eef4f700;">
+    <body style="background: #eef4f7;;">
+        <style>
+            #newsletter-title {
+                color: black;
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+                font-size: 40px;
+                margin-top: 25px;
+            }
+            #newsletter-tagline {
+                color: rgb(117, 117, 117);
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 20px;
+                text-align: center;
+                margin-top: -20px;
+            }
+            #header {
+                background-image: linear-gradient(120deg, rgb(199, 199, 199) , rgb(228, 228, 228));;
+                border-radius: 10px;
+                padding: 20px;
+                height: 100px;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #main {
+                background:rgb(255, 255, 255);
+                border-color: #ffffff00;
+                border-style: solid;
+                border-radius: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                width: 100%;
+            }
+            #main-text {
+                color: darkslategrey;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 18px;
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 30px;
+            }
+            #footer {
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+            #footer-text {
+                color: darkslategrey;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 14px;
+                text-align: center;
+                margin-top: 10px;
+            }
+            p {
+                color: black;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 18px;
+                text-align: left;
+            }
+            container {
+                margin-top: 20px;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+        </style>
+        <container>
+            <table id="header">
+                <tbody>
+                    <td>
+                        <h1 id="newsletter-title">Confirm that you want to Unsubscribe</h1>
+                        <p id="newsletter-tagline">from {{ newsletter_title }}</p>
+                    </td>
+                </tbody>
+            </table>
+        </container>
+        <container>
+            <table id="main">
+                <tbody>
+                    <td>
+                        <p id="main-text">
+                            Please verify that you want to unsubscribe from {{ newsletter_title }}. If you don't verify this, we won't remove your email from our list.<br>
+                            If you haven't subscribed to {{ newsletter_title }} ignore this Email.<br>
+                            <br>
+                            <a href="{{ unsubscribe_link }}"> Unsubscribe from {{ newsletter_title }}</a><br>
+                            or copy this link: {{ unsubscribe_link }}<br>
+                            <br>
+                            Have a nice day!
+                        </p>
+                    </td>
+                </tbody>
+            </table>
+        </container>
+        <container>
+            <table id="footer">
+                <tbody>
+                    <td>
+                        <p id=footer-text>{{ footer_address }}</p>
+                        <p id=footer-text>You received this email because you subscribed to "{{ newsletter_title }}".<br>Copyright {{ footer_year }} {{ newsletter_title }}</p>
+                    </td>
+                </tbody>
+            </table>
+        </container>
+    </body>
+</html>

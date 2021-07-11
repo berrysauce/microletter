@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
+        <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
         <title>microletter</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/styles.min.css" />
     </head>
+
     <body>
-        <section class="highlight-clean">
+        <section class="newsletter-subscribe">
             <div class="container">
                 <div class="intro" style="margin-top: 140px;">
-                    <h2 class="text-center" style="color: rgb(0, 0, 0); line-height: 40px;">Do you really want to unsubscribe?</h2>
+                    <h2 class="text-center" style="color: rgb(0, 0, 0); line-height: 40px; font-size: 32px;">Do you really want to unsubscribe?</h2>
                     <p class="text-center" style="color: rgb(54, 54, 54);">
-                        We'll delete your email address out of our database and stop sending you emails if you unsubscribe. You should receive an unsubscribe confirmation if everything worked.
-                    </p>
-                    <p
-                        class="text-start"
-                        style="color: rgb(119, 119, 119); background: #ededed; padding-top: 20px; padding-bottom: 20px; border-width: 2px; border-color: rgb(237, 237, 237); border-radius: 5px; padding-right: 20px; padding-left: 20px;"
-                    >
-                        <strong>EMAIL</strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{ email }}<br />
-                        <strong>SUBSCRIBED ON</strong>&nbsp; &nbsp; &nbsp; {{ date }}<br />
-                        <strong>SUBSCRIBED VIA&nbsp; &nbsp; &nbsp;&nbsp;</strong>Landing Page
+                        Please enter your email so we can send you an unsubscribe link.<br />
+                        After you've received the email (check your spam folder) click the link to confirm.
                     </p>
                 </div>
-                <div class="buttons"><a class="btn btn-primary" role="button" href="?finalize=True" style="background: rgb(220, 37, 37);">UNSUBSCRIBE</a></div>
+                <form class="d-flex justify-content-center flex-wrap" method="post" action="/unsubscribe/send" enctype="multipart/form-data">
+                    <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Your Email" /></div>
+                    <div class="mb-3"><button class="btn" type="submit" style="background: #e03b3b; color: rgb(255, 255, 255);">UNSUBSCRIBE</button></div>
+                </form>
             </div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>

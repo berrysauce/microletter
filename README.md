@@ -4,6 +4,7 @@
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/berrysauce/microletter">
   <img alt="Libraries.io dependency status for GitHub repo" src="https://img.shields.io/librariesio/github/berrysauce/microletter">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/berrysauce/microletter">
+  <img alt="GitHub CodeQL status" src="https://github.com/berrysauce/microletter/actions/workflows/codeql-analysis.yml/badge.svg">
 </p>
 
 # microletter

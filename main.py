@@ -39,6 +39,8 @@ config = deta.Base("microletter-config")
 
 @app.get("/")
 async def get_root(request: Request):
+    if len(config.fetch(None).items) == 0:
+        return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
     return templates.TemplateResponse("index.html", {"request": request, "newsletter_title": "Pauls Newsletter", "newsletter_description": "This is a little newsletter to demo what microletter can do. Since I don't know what else to put here, I added this sentence.", "privacy_link": "/privacy", "footer_year": str(datetime.now().strftime("%Y"))})
 
 @app.post("/subscribe")
@@ -109,10 +111,14 @@ async def get_unsubscribe(request: Request, key: Optional[str] = None):
 
 @app.get("/dashboard")
 async def get_dashboard():
+    if len(config.fetch(None).items) == 0:
+        return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
     return RedirectResponse("/dashboard/home")
 
 @app.get("/dashboard/home", response_class=HTMLResponse)
 async def get_home(request: Request, show: Optional[str] = None):
+    if len(config.fetch(None).items) == 0:
+        return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
     if show == "success":
         popup_html = """<div role="alert" class="alert alert-success" style="margin-top: 10px;margin-bottom: 10px;"><span><strong>Done!</strong><br /></span></div>"""
     elif show == "error":
@@ -124,45 +130,16 @@ async def get_home(request: Request, show: Optional[str] = None):
 
 @app.get("/dashboard/editor", response_class=HTMLResponse)
 async def get_editor():
+    if len(config.fetch(None).items) == 0:
+        return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
     with open("templates/editor.html", "r") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
-@app.post("/dashboard/editor/create", response_class=HTMLResponse)
-async def post_create(request: Request, title: str = Form(None), content: Optional[str] = Form(None)):
-    if content is None or title is None:
-        title = "Your post can't be empty!"
-        description = "Sorry, but you can't create a post without content. Please go back and fill out the content field to send your post."
-        return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
-    
-    date = str(datetime.now().strftime("%d. %B %Y"))
-    html_content = markdown.markdown(content)
-    soup = BeautifulSoup(html_content, 'lxml')
-    text_content = soup.get_text()
-    excerpt = text_content[:50] + "..."
-    email_data={
-        "post_title": title,
-        "post_date": date,
-        "post_content": html_content
-    }
-    
-    if mailer.send(email_data) is not True:
-        title = "There was an error with sending your email"
-        description = "Sorry, but the email couldn't be sent. Please try again later."
-        return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
-    
-    posts.insert({
-        "title": title,
-        "date": date,
-        "html_content": html_content,
-        "text_content": text_content,
-        "excerpt": excerpt
-    })
-    
-    return RedirectResponse(url="/dashboard/home/?show=success", status_code=status.HTTP_303_SEE_OTHER)
-
 @app.get("/dashboard/subscribers", response_class=HTMLResponse)
 async def get_subscribers(request: Request, show: Optional[str] = None):
+    if len(config.fetch(None).items) == 0:
+        return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
     if show == "success":
         popup_html = """<div role="alert" class="alert alert-success" style="margin-top: 10px;margin-bottom: 10px;"><span><strong>Done!</strong><br /></span></div>"""
     elif show == "error":
@@ -202,6 +179,39 @@ async def post_unsubscribe_send(request: Request, email: str = Form(...)):
         title = "There was an error sending the confirmation email"
         description = "Sorry but the unsubscribe confirmation email couldn't be sent. Please try again later."
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
+    
+@app.post("/dashboard/editor/create", response_class=HTMLResponse)
+async def post_create(request: Request, title: str = Form(None), content: Optional[str] = Form(None)):
+    if content is None or title is None:
+        title = "Your post can't be empty!"
+        description = "Sorry, but you can't create a post without content. Please go back and fill out the content field to send your post."
+        return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
+    
+    date = str(datetime.now().strftime("%d. %B %Y"))
+    html_content = markdown.markdown(content)
+    soup = BeautifulSoup(html_content, 'lxml')
+    text_content = soup.get_text()
+    excerpt = text_content[:50] + "..."
+    email_data={
+        "post_title": title,
+        "post_date": date,
+        "post_content": html_content
+    }
+    
+    if mailer.send(email_data) is not True:
+        title = "There was an error with sending your email"
+        description = "Sorry, but the email couldn't be sent. Please try again later."
+        return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
+    
+    posts.insert({
+        "title": title,
+        "date": date,
+        "html_content": html_content,
+        "text_content": text_content,
+        "excerpt": excerpt
+    })
+    
+    return RedirectResponse(url="/dashboard/home/?show=success", status_code=status.HTTP_303_SEE_OTHER)
 
 @app.get("/dashboard/subscribers/delete/{key}")
 async def get_subscriber_delete(key: str):

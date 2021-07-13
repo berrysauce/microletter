@@ -14,12 +14,17 @@ load_dotenv()
 deta = Deta(os.getenv("DETA_TOKEN"))
 deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
+smtp_email = str(os.getenv("SMTP_EMAIL"))
+smtp_password = str(os.getenv("SMTP_PASSWORD"))
+smtp_server = str(os.getenv("SMTP_SERVER"))
+smtp_port = int(os.getenv("SMTP_PORT"))
+
 subscribers = deta.Base("microletter-subscribers")
 
 def verify(email: str, key: str):
-    sender_email = str(os.getenv("EMAIL_ADDRESS"))                                   # REPLACE WITH CONFIG DATA 
+    sender_email = smtp_email                                 # REPLACE WITH CONFIG DATA 
     receiver_email = email
-    password = str(os.getenv("EMAIL_TOKEN"))
+    password = smtp_password
     message = MIMEMultipart("alternative")
     message["Subject"] = "Verify your Email - {0}".format("Paul's Newsletter")     # REPLACE WITH CONFIG DATA
     message["From"] = sender_email
@@ -42,16 +47,16 @@ def verify(email: str, key: str):
 
     # Create secure connection with server and send email
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+    with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
 
     return True
 
 def unsubscribe(email: str, key: str):
-    sender_email = str(os.getenv("EMAIL_ADDRESS"))                                   # REPLACE WITH CONFIG DATA 
+    sender_email = smtp_email                                   # REPLACE WITH CONFIG DATA 
     receiver_email = email
-    password = str(os.getenv("EMAIL_TOKEN"))
+    password = smtp_password
     message = MIMEMultipart("alternative")
     message["Subject"] = "Confirm that you want to unsubscribe from {0}".format("Paul's Newsletter")     # REPLACE WITH CONFIG DATA
     message["From"] = sender_email
@@ -74,15 +79,15 @@ def unsubscribe(email: str, key: str):
 
     # Create secure connection with server and send email
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+    with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
 
     return True
 
 def send(data):
-    sender_email = str(os.getenv("EMAIL_ADDRESS"))                                   # REPLACE WITH CONFIG DATA 
-    password = str(os.getenv("EMAIL_TOKEN"))
+    sender_email = smtp_email                                 # REPLACE WITH CONFIG DATA 
+    password = smtp_password
     message = MIMEMultipart("alternative")
     message["Subject"] = "{0} | {1}".format(data["post_title"], "Paul's Newsletter") # REPLACE WITH CONFIG DATA
     
@@ -116,7 +121,7 @@ def send(data):
 
     # Create secure connection with server and send email
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+    with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receivers, message.as_string())
 

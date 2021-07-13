@@ -31,6 +31,22 @@ posts = deta.Base("microletter-posts")
 config = deta.Base("microletter-config")
 
 
+
+"""
+--------------------------------------------------------------------------------------
+                                MIDDLEWARES
+--------------------------------------------------------------------------------------
+"""
+
+@app.middleware('http')
+async def add_no_cache(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path == "/":
+        response.headers["Cache-control"] = "no-store"
+    return response
+
+
+
 """
 --------------------------------------------------------------------------------------
                                 USER FRONT END

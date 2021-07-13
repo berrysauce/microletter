@@ -17,8 +17,10 @@ A micro newsletter service 📨
 4. Create a .env file with the following format in the same directory as the repository
 ```
 DETA_TOKEN=YOURDETATOKEN
-EMAIL_TOKEN=YOURGOOGLEPASSWORD
-EMAIL_ADDRESS=YOURGMAILADDRESS
+SMTP_PASSWORD=YOURGOOGLEPASSWORD
+SMTP_EMAIL=YOURGMAILADDRESS
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=465
 ```
 5. Install all Python dependencies with `pip install -r requirements.txt` (make sure `pip -v` returns a version above 3.x - if not use `pip3 install -r requirements.txt`)
 6. Run the code with `python main.py` (or with `python3 main.py` if `pip -v` returned a version under 3.x)

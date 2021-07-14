@@ -6,8 +6,8 @@ The microletter project is made to be secure and reliant. Still, security needs 
 
 | Version   | Supported          |
 | --------- | ------------------ |
-| > 0.1.0   | :white_check_mark: |
-| < 0.1.0   | :x:                |
+| > 0.1.2   | :white_check_mark: |
+| < 0.1.2   | :x:                |
 
 Please update your installation if it's not supported anymore.
 

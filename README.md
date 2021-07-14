@@ -12,7 +12,6 @@ A micro newsletter service 📨
 
 * **Homepage:** https://microletter.cc
 * **Documentation:** https://docs.microletter.cc
-* **Install on Deta Space:** https://deta.space/discovery/microletter
 
 ## Installation
 1. Get a Deta project key at https://web.deta.sh

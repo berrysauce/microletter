@@ -7,7 +7,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from datetime import datetime
 from typing import Optional
 import markdown
-from tools import mailer, htmlgen
+from tools import mailer, htmlgen, configuration
 from deta import Deta
 from dotenv import load_dotenv
 import os
@@ -57,7 +57,7 @@ async def add_no_cache(request: Request, call_next):
 async def get_root(request: Request):
     if len(config.fetch(None).items) == 0:
         return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
-    return templates.TemplateResponse("index.html", {"request": request, "newsletter_title": "Pauls Newsletter", "newsletter_description": "This is a little newsletter to demo what microletter can do. Since I don't know what else to put here, I added this sentence.", "privacy_link": "/privacy", "footer_year": str(datetime.now().strftime("%Y"))})
+    return templates.TemplateResponse("index.html", {"request": request, "newsletter_title": configuration.get("newsletter-title"), "newsletter_description": configuration.get("newsletter-description"), "privacy_link": configuration.get("privacy-link"), "footer_year": str(datetime.now().strftime("%Y"))})
 
 @app.post("/subscribe")
 async def post_subscribe(request: Request, email: str = Form(...)):

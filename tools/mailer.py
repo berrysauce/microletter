@@ -6,6 +6,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from deta import Deta
 import os
+from tools import configuration
 
 # See https://support.google.com/accounts/answer/185833?p=InvalidSecondFactor&visit_id=637602533738157783-185148397&rd=1
 # Credit/Thanks to RealPython
@@ -14,7 +15,7 @@ load_dotenv()
 deta = Deta(os.getenv("DETA_TOKEN"))
 deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
-smtp_email = str(os.getenv("SMTP_EMAIL"))
+smtp_email = str(os.getenv("SMTP_USERNAME"))
 smtp_password = str(os.getenv("SMTP_PASSWORD"))
 smtp_server = str(os.getenv("SMTP_SERVER"))
 smtp_port = int(os.getenv("SMTP_PORT"))
@@ -22,18 +23,17 @@ smtp_port = int(os.getenv("SMTP_PORT"))
 subscribers = deta.Base("microletter-subscribers")
 
 def verify(email: str, key: str):
-    sender_email = smtp_email                                 # REPLACE WITH CONFIG DATA 
+    sender_email = smtp_email
     receiver_email = email
-    password = smtp_password
     message = MIMEMultipart("alternative")
-    message["Subject"] = "Verify your Email - {0}".format("Paul's Newsletter")     # REPLACE WITH CONFIG DATA
+    message["Subject"] = "Verify your Email - {0}".format(configuration.get("newsletter-title"))
     message["From"] = sender_email
     message["To"] = receiver_email
     
     email_data={
-        "newsletter_title": "Paul's Newsletter",                                   # REPLACE WITH CONFIG DATA
+        "newsletter_title": configuration.get("newsletter-title"),
         "subscribe_link": "{0}/verify/{1}".format(deta_url, key),
-        "footer_address": "Musterstr. 1a, 01234 Musterstadt, Musterland",          # REPLACE WITH CONFIG DATA
+        "footer_address": configuration.get("privacy-address"),
         "footer_year": str(datetime.now().strftime("%Y"))
     }
 
@@ -48,24 +48,23 @@ def verify(email: str, key: str):
     # Create secure connection with server and send email
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
-        server.login(sender_email, password)
+        server.login(sender_email, smtp_password)
         server.sendmail(sender_email, receiver_email, message.as_string())
 
     return True
 
 def unsubscribe(email: str, key: str):
-    sender_email = smtp_email                                   # REPLACE WITH CONFIG DATA 
+    sender_email = smtp_email
     receiver_email = email
-    password = smtp_password
     message = MIMEMultipart("alternative")
-    message["Subject"] = "Confirm that you want to unsubscribe from {0}".format("Paul's Newsletter")     # REPLACE WITH CONFIG DATA
+    message["Subject"] = "Confirm that you want to unsubscribe from {0}".format(configuration.get("newsletter-title"))
     message["From"] = sender_email
     message["To"] = receiver_email
     
     email_data={
-        "newsletter_title": "Paul's Newsletter",                                   # REPLACE WITH CONFIG DATA
+        "newsletter_title": configuration.get("newsletter-title"),
         "unsubscribe_link": "{0}/unsubscribe/?key={1}".format(deta_url, key),
-        "footer_address": "Musterstr. 1a, 01234 Musterstadt, Musterland",          # REPLACE WITH CONFIG DATA
+        "footer_address": configuration.get("privacy-address"),
         "footer_year": str(datetime.now().strftime("%Y"))
     }
 
@@ -80,16 +79,15 @@ def unsubscribe(email: str, key: str):
     # Create secure connection with server and send email
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
-        server.login(sender_email, password)
+        server.login(sender_email, smtp_password)
         server.sendmail(sender_email, receiver_email, message.as_string())
 
     return True
 
 def send(data):
-    sender_email = smtp_email                                 # REPLACE WITH CONFIG DATA 
-    password = smtp_password
+    sender_email = smtp_email
     message = MIMEMultipart("alternative")
-    message["Subject"] = "{0} | {1}".format(data["post_title"], "Paul's Newsletter") # REPLACE WITH CONFIG DATA
+    message["Subject"] = "{0} | {1}".format(data["post_title"], configuration.get("newsletter-title"))
     
     entries = subscribers.fetch({"verified": True}).items
     with open("templates/emails/newsletter.html", "r") as f:
@@ -103,13 +101,16 @@ def send(data):
     message["To"] = sender_email
         
     email_data={
-        "newsletter_title": "Paul's Newsletter",
-        "newsletter_tagline": "Just a weekly ramble.",
+        "newsletter_title": configuration.get("newsletter-title"),
+        "newsletter_tagline": configuration.get("newsletter-tagline"),
+        "fade1": configuration.get("color-fade1"),
+        "fade2": configuration.get("color-fade2"),
+        "titlecolor": configuration.get("color-title"),
         "post_title": data["post_title"],
         "post_date": data["post_date"],
         "post_content": data["post_content"],
         "footer_unsubscribe": "{0}/unsubscribe".format(deta_url),
-        "footer_address": "Musterstr. 1a, 01234 Musterstadt, Musterland",           # REPLACE WITH CONFIG DATA
+        "footer_address": configuration.get("privacy-address"),
         "footer_year": str(datetime.now().strftime("%Y"))
     }
 
@@ -122,7 +123,7 @@ def send(data):
     # Create secure connection with server and send email
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
-        server.login(sender_email, password)
+        server.login(sender_email, smtp_password)
         server.sendmail(sender_email, receivers, message.as_string())
 
     return True

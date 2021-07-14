@@ -10,6 +10,10 @@
 # microletter
 A micro newsletter service 📨
 
+* **Homepage:** https://microletter.cc
+* **Documentation:** https://docs.microletter.cc
+* **Install on Deta Space:** https://deta.space/discovery/microletter
+
 ## Installation
 1. Get a Deta project key at https://web.deta.sh
 2. Get your Google Password or generate an App Password (like shown [here](https://support.google.com/accounts/answer/185833?hl=en)) if you're using 2 Factor Authentication

@@ -14,6 +14,7 @@ A micro newsletter service 📨
 * **Documentation:** https://docs.microletter.cc
 
 ## Installation
+> ⚠ **WARNING:** All dashboard links are accessable by ANYONE currently. Sensitive information might be viewable by anyone.
 1. Get a Deta project key at https://web.deta.sh
 2. Get your Google Password or generate an App Password (like shown [here](https://support.google.com/accounts/answer/185833?hl=en)) if you're using 2 Factor Authentication
 3. Clone this repository

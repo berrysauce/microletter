@@ -41,7 +41,7 @@ config = deta.Base("microletter-config")
 @app.middleware('http')
 async def add_no_cache(request: Request, call_next):
     response = await call_next(request)
-    if request.url.path == "/dashboard":
+    if "/dashboard" in request.url.path:
         response.headers["Cache-control"] = "no-store"
     return response
 

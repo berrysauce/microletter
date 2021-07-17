@@ -5,7 +5,7 @@ from deta import Deta
 import os
 
 load_dotenv()
-deta = Deta(os.getenv("DETA_TOKEN"))
+deta = Deta()
 
 subscribers = deta.Base("microletter-subscribers")
 posts = deta.Base("microletter-posts")

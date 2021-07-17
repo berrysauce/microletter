@@ -12,7 +12,7 @@ from tools import configuration
 # Credit/Thanks to RealPython
 
 load_dotenv()
-deta = Deta(os.getenv("DETA_TOKEN"))
+deta = Deta()
 deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
 smtp_email = str(os.getenv("SMTP_USERNAME"))

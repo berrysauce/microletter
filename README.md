@@ -20,7 +20,7 @@ A micro newsletter service 📨
 3. Clone this repository
 4. Create a .env file with the following format in the same directory as the repository
 ```
-DETA_TOKEN=YOURDETATOKEN
+DETA_PROJECT_KEY=YOURDETATOKEN
 SMTP_PASSWORD=YOURGOOGLEPASSWORD
 SMTP_USERNAME=YOURGMAILADDRESS
 SMTP_SERVER=smtp.gmail.com

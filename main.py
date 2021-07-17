@@ -16,7 +16,7 @@ import smtplib, ssl
 
 load_dotenv()
 app = FastAPI()
-deta = Deta(os.getenv("DETA_TOKEN"))
+deta = Deta()
 
 app.mount("/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/setup/assets", StaticFiles(directory="templates/assets"), name="assets")

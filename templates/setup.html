@@ -24,7 +24,7 @@
         </section>
         <section class="newsletter-subscribe">
             <div class="container">
-                <form method="post" action="/setup/complete" enctype="multipart/form-data">
+                <form method="post" action="/dashboard/settings/save" enctype="multipart/form-data">
                     <div>
                         <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 1</span>&nbsp;Email</h2>
                         <p class="text-start" style="margin-top: -15px;">
@@ -34,18 +34,7 @@
                             <strong>You need to add these credentials in your Deta Space dashboard.</strong> Click on the three dots next to the microletter app icon, click on settings and enter the details there.
                             Don't know where to find your SMTP&nbsp;credentials? <a href="https://docs.microletter.cc/guides/how-to-get-your-smtp-credentials" target="_blank">Click here</a>.
                         </p>
-                        <a style="margin-top: 10px;" href="#" onclick="generateTestUrl();" id="test-link" target="_blank">Test the credentials</a>
-                        <script type="text/javascript">
-                            function generateTestUrl() {
-                                let username = document.getElementById("username-field").value;
-                                let password = document.getElementById("password-field").value;
-                                let server = document.getElementById("server-field").value;
-                                let port = document.getElementById("port-field").value;
-                                let link = "/setup/test" + "?username=" + username + "&password=" + password + "&server=" + server + "&port=" + port;
-                                document.getElementById("test-link").href = link;
-                                return false;
-                            }
-                        </script>
+                        <a style="margin-top: 10px;" href="/setup/test" id="test-link" target="_blank">Test the credentials</a>
                     </div>
                     <div style="margin-top: 35px;">
                         <hr />

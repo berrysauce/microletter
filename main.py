@@ -166,6 +166,31 @@ async def get_subscribers(request: Request, show: Optional[str] = None):
     subscribers_html, total, monthly = htmlgen.subscribertable()
     return templates.TemplateResponse("subscribers.html", {"request": request, "popup": popup_html, "total_subscribers": total, "monthly_subscribers": monthly, "subscribers": subscribers_html})
 
+@app.get("/dashboard/settings")
+async def get_settings(request: Request, show: Optional[str] = None):
+    configdata = config.fetch(None).items
+    if len(configdata) == 0:
+        return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
+    if show == "success":
+        popup_html = """<div role="alert" class="alert alert-success" style="margin-top: 10px;margin-bottom: 10px;"><span><strong>Done!</strong><br /></span></div>"""
+    elif show == "error":
+        popup_html = """<div role="alert" class="alert alert-danger" style="margin-top: 10px;margin-bottom: 10px;"><span><strong>Error</strong><br /></span></div>"""
+    else:
+        popup_html = """"""
+    
+    configdata = configdata[0]
+    return templates.TemplateResponse("settings.html", {"request": request, 
+                                                        "popup": popup_html, 
+                                                        "form_title": configdata["newsletter-title"], 
+                                                        "form_tagline": configdata["newsletter-tagline"], 
+                                                        "form_description": configdata["newsletter-description"],
+                                                        "form_fade1": configdata["color-fade1"],
+                                                        "form_fade2": configdata["color-fade2"],
+                                                        "form_titletext": configdata["color-title"],
+                                                        "form_name": configdata["privacy-name"],
+                                                        "form_privacy": configdata["privacy-link"],
+                                                        "form_address": configdata["privacy-address"]})
+
 @app.get("/setup", response_class=HTMLResponse)
 async def get_setup():
     if len(config.fetch(None).items) != 0:
@@ -173,6 +198,7 @@ async def get_setup():
     with open("templates/setup.html", "r") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
+
 
 """
 --------------------------------------------------------------------------------------
@@ -240,9 +266,15 @@ async def get_home_delete(key: str):
     return RedirectResponse(url="/dashboard/home/?show=success", status_code=status.HTTP_303_SEE_OTHER)
 
 @app.get("/setup/test")
-async def get_setup_test(request: Request, username: str, password: str, server: str, port: int):
+async def get_setup_test(request: Request):
     if len(config.fetch(None).items) != 0:
         raise HTTPException(status_code=404, detail="Not found")
+    
+    load_dotenv()
+    password = str(os.getenv("SMTP_PASSWORD"))
+    username = str(os.getenv("SMTP_USERNAME"))
+    server = str(os.getenv("SMTP_SERVER"))
+    port = int(os.getenv("SMTP_PORT"))
     try:
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(server, port, context=context) as server:
@@ -256,12 +288,9 @@ async def get_setup_test(request: Request, username: str, password: str, server:
         description = "Failed to connect to the SMPT server. Error: {0}".format(e)
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
     
-@app.post("/setup/complete")
-async def post_setup_complete(
-    username: str = Form(...), 
-    password: str = Form(...), 
-    server: str = Form(...), 
-    port: int = Form(...), 
+@app.post("/dashboard/settings/save")
+async def post_settings_save(
+    dest: Optional[str] = None,
     title: str = Form(...), 
     tagline: str = Form(...), 
     description: str = Form(...), 
@@ -272,13 +301,7 @@ async def post_setup_complete(
     privacy: str = Form(...), 
     address: str = Form(...)
     ):
-    if len(config.fetch(None).items) != 0:
-        raise HTTPException(status_code=404, detail="Not found")
-    config.insert({
-        "smpt-username": username,
-        "smtp-password": password,
-        "smpt-server": server,
-        "smtp-port": port,
+    data = {
         "newsletter-title": title,
         "newsletter-tagline": tagline,
         "newsletter-description": description,
@@ -288,8 +311,15 @@ async def post_setup_complete(
         "privacy-name": name,
         "privacy-link": privacy,
         "privacy-address": address
-    })
-    return RedirectResponse(url="/dashboard/home", status_code=status.HTTP_303_SEE_OTHER)
+    }
+    if dest == "settings":
+        for item in config.fetch(None).items:
+            config.delete(item["key"])
+        config.insert(data)
+        return RedirectResponse(url="/dashboard/settings?show=success", status_code=status.HTTP_303_SEE_OTHER)
+    else:
+        config.insert(data)
+        return RedirectResponse(url="/dashboard/home", status_code=status.HTTP_303_SEE_OTHER)
 
 
 @app.exception_handler(StarletteHTTPException)

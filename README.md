@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://imgbb.com/"><img src="https://i.ibb.co/wz12ysJ/githublogo-big.png" alt="githublogo-big" border="0"></a>
+  <img src="https://i.ibb.co/wz12ysJ/githublogo-big.png" alt="microletter-logo" border="0">
   <br>
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/berrysauce/microletter">
   <img alt="Libraries.io dependency status for GitHub repo" src="https://img.shields.io/librariesio/github/berrysauce/microletter">

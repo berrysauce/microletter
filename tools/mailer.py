@@ -13,7 +13,6 @@ from tools import configuration
 
 load_dotenv()
 deta = Deta()
-deta_url = "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
 smtp_email = str(os.getenv("SMTP_USERNAME"))
 smtp_password = str(os.getenv("SMTP_PASSWORD"))
@@ -21,6 +20,12 @@ smtp_server = str(os.getenv("SMTP_SERVER"))
 smtp_port = int(os.getenv("SMTP_PORT"))
 
 subscribers = deta.Base("microletter-subscribers")
+
+def deta_url():
+    if os.getenv("DETA_SPACE_APP") is True:
+        return "https://" + str(os.getenv("DETA_PATH")) + ".deta.app"
+    else:
+        return "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
 
 def verify(email: str, key: str):
     sender_email = smtp_email
@@ -32,7 +37,7 @@ def verify(email: str, key: str):
     
     email_data={
         "newsletter_title": configuration.get("newsletter-title"),
-        "subscribe_link": "{0}/verify/{1}".format(deta_url, key),
+        "subscribe_link": "{0}/verify/{1}".format(deta_url(), key),
         "footer_address": configuration.get("privacy-address"),
         "footer_year": str(datetime.now().strftime("%Y"))
     }
@@ -63,7 +68,7 @@ def unsubscribe(email: str, key: str):
     
     email_data={
         "newsletter_title": configuration.get("newsletter-title"),
-        "unsubscribe_link": "{0}/unsubscribe/?key={1}".format(deta_url, key),
+        "unsubscribe_link": "{0}/unsubscribe/?key={1}".format(deta_url(), key),
         "footer_address": configuration.get("privacy-address"),
         "footer_year": str(datetime.now().strftime("%Y"))
     }
@@ -109,7 +114,7 @@ def send(data):
         "post_title": data["post_title"],
         "post_date": data["post_date"],
         "post_content": data["post_content"],
-        "footer_unsubscribe": "{0}/unsubscribe".format(deta_url),
+        "footer_unsubscribe": "{0}/unsubscribe".format(deta_url()),
         "footer_address": configuration.get("privacy-address"),
         "footer_year": str(datetime.now().strftime("%Y"))
     }

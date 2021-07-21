@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Optional
 import markdown
 from tools import mailer, htmlgen, configuration
-from deta import Deta, App
+from deta import Deta
 from dotenv import load_dotenv
 import os
 from bs4 import BeautifulSoup

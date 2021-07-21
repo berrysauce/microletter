@@ -14,20 +14,26 @@ from tools import configuration
 load_dotenv()
 deta = Deta()
 
-smtp_email = str(os.getenv("SMTP_USERNAME"))
-smtp_password = str(os.getenv("SMTP_PASSWORD"))
-smtp_server = str(os.getenv("SMTP_SERVER"))
-smtp_port = int(os.getenv("SMTP_PORT"))
-
 subscribers = deta.Base("microletter-subscribers")
 
 def deta_url():
-    if os.getenv("DETA_SPACE_APP") is True:
+    if os.getenv("DETA_SPACE_APP"):
         return "https://" + str(os.getenv("DETA_PATH")) + ".deta.app"
     else:
         return "https://" + str(os.getenv("DETA_PATH")) + ".deta.dev"
+    
+def get_env():
+    try:
+        smtp_email = str(os.getenv("SMTP_USERNAME"))
+        smtp_password = str(os.getenv("SMTP_PASSWORD"))
+        smtp_server = str(os.getenv("SMTP_SERVER"))
+        smtp_port = int(os.getenv("SMTP_PORT"))
+        return smtp_email, smtp_password, smtp_server, smtp_port
+    except:
+        raise Exception("The enviroment variables are empty.") 
 
 def verify(email: str, key: str):
+    smtp_email, smtp_password, smtp_server, smtp_port = get_env()
     sender_email = smtp_email
     receiver_email = email
     message = MIMEMultipart("alternative")
@@ -59,6 +65,7 @@ def verify(email: str, key: str):
     return True
 
 def unsubscribe(email: str, key: str):
+    smtp_email, smtp_password, smtp_server, smtp_port = get_env()
     sender_email = smtp_email
     receiver_email = email
     message = MIMEMultipart("alternative")
@@ -90,6 +97,7 @@ def unsubscribe(email: str, key: str):
     return True
 
 def send(data):
+    smtp_email, smtp_password, smtp_server, smtp_port = get_env()
     sender_email = smtp_email
     message = MIMEMultipart("alternative")
     message["Subject"] = "{0} | {1}".format(data["post_title"], configuration.get("newsletter-title"))

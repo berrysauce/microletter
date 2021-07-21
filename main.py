@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Optional
 import markdown
 from tools import mailer, htmlgen, configuration
-from deta import Deta
+from deta import Deta, App
 from dotenv import load_dotenv
 import os
 from bs4 import BeautifulSoup
@@ -30,6 +30,16 @@ subscribers = deta.Base("microletter-subscribers")
 posts = deta.Base("microletter-posts")
 config = deta.Base("microletter-config")
 
+
+"""
+today = datetime.date.now()
+    entries = subscribers.fetch({"verified": False})
+    for entry in entries:
+        delta = today - datetime.strptime(entry["subscribed_on"], "%d. %B %Y")
+        if delta.hours() >= 48:
+            subscribers.delete(entry["key"])
+    return "[CRON] Purged unverified emails"
+"""
 
 
 """
@@ -71,13 +81,16 @@ async def post_subscribe(request: Request, email: str = Form(...)):
             "subscribed_on": str(datetime.now().strftime("%d. %B %Y")),
             "verified": False
     })
-    if mailer.verify(email, entry["key"]) is True:
+    
+    try:
+        mailer.verify(email, entry["key"])
         title = "Last step: Confirm your email"
         description = "You should've received a confirmation email. Click on the link in the email to confirm your subscription. If you can't find it, look in your spam folder or try again."
         return templates.TemplateResponse("success.html", {"request": request, "title": title, "description": description})
-    else:
+    except Exception as e:
+        subscribers.delete(entry["key"])
         title = "Email confirmation failed"
-        description = "There was a problem with sending your verification Email."
+        description = "There was a problem with sending your verification Email. {0}".format(e)
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
 
 @app.get("/verify/{key}")
@@ -213,13 +226,14 @@ async def post_unsubscribe_send(request: Request, email: str = Form(...)):
         title = "This user isn't subscribed!"
         description = "Sorry, but the email couldn't be found in our database."
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
-    if mailer.unsubscribe(email, entry[0]["key"]) is True:
+    try:
+        mailer.unsubscribe(email, entry[0]["key"])
         title = "Last step: Confirm that you want to Unsubscribe"
         description = "We've sent you an email containing a link to unsubscribe. Sorry, but this is a security measure."
         return templates.TemplateResponse("success.html", {"request": request, "title": title, "description": description})
-    else:
+    except Exception as e:
         title = "There was an error sending the confirmation email"
-        description = "Sorry but the unsubscribe confirmation email couldn't be sent. Please try again later."
+        description = "Sorry but the unsubscribe confirmation email couldn't be sent. {0}".format(e)
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
     
 @app.post("/dashboard/editor/create", response_class=HTMLResponse)
@@ -240,10 +254,13 @@ async def post_create(request: Request, title: str = Form(None), content: Option
         "post_content": html_content
     }
     
-    if mailer.send(email_data) is not True:
+    try:
+        mailer.send(email_data)
+    except Exception as e:
         title = "There was an error with sending your email"
-        description = "Sorry, but the email couldn't be sent. Please try again later."
+        description = "Sorry, but the email couldn't be sent. {0}".format(e)
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
+        
     
     posts.insert({
         "title": title,
@@ -265,11 +282,8 @@ async def get_home_delete(key: str):
     posts.delete(key)
     return RedirectResponse(url="/dashboard/home/?show=success", status_code=status.HTTP_303_SEE_OTHER)
 
-@app.get("/setup/test")
+@app.get("/dashboard/settings/test")
 async def get_setup_test(request: Request):
-    if len(config.fetch(None).items) != 0:
-        raise HTTPException(status_code=404, detail="Not found")
-    
     load_dotenv()
     password = str(os.getenv("SMTP_PASSWORD"))
     username = str(os.getenv("SMTP_USERNAME"))

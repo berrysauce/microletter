@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="/assets/css/easymde.min.css" />
+        <script src="/assets/js/easymde.min.js"></script>
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png" />
@@ -10,7 +11,6 @@
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-config" content="/assets/img/browserconfig.xml" />
         <meta name="theme-color" content="#ffffff" />
-        <script src="/assets/js/easymde.min.js"></script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
         <title>microletter - Dashboard</title>
@@ -19,9 +19,9 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="margin-top: 16px;">
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="margin-top: 16px; margin-bottom: -20px;">
             <div class="container">
-                <a class="navbar-brand" href="/dashboard/home" style="color: rgb(0, 0, 0); font-size: 24px;"><img src="assets/img/logo.png" style="width: 40px;" />&nbsp;microletter</a>
+                <a class="navbar-brand" href="/dashboard/home" style="color: rgb(0, 0, 0); font-size: 24px;"><img src="assets/img/logo.png" style="width: 40px;" /> microletter</a>
                 <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav me-auto">
@@ -44,7 +44,7 @@
                                     <rect x="4" y="4" width="16" height="16" rx="2"></rect>
                                     <path d="M4 13h3l3 3h4l3 -3h3"></path>
                                 </svg>
-                                &nbsp;Dashboard
+                                Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
@@ -66,7 +66,7 @@
                                     <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
                                     <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"></line>
                                 </svg>
-                                &nbsp;Create a Post
+                                Create a Post
                             </a>
                         </li>
                         <li class="nav-item">
@@ -90,18 +90,32 @@
                                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                     <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
                                 </svg>
-                                &nbsp;Your Subscribers
+                                Your Subscribers
                             </a>
                         </li>
                     </ul>
                     <span class="navbar-text actions">
-                        <a
-                            class="btn btn-light action-button"
-                            role="button"
-                            href="/dashboard/settings"
-                            style="border-radius: 5px; padding-top: 5px; padding-bottom: 5px; padding-right: 10px; padding-left: 10px; background: rgb(29, 106, 221); margin-left: 18px;"
-                        >
-                            <strong>Settings</strong>
+                        <a class="btn btn-primary" role="button" style="border-radius: 5px; background: rgba(13, 110, 253, 0); border-width: 2px; border-color: var(--bs-blue); color: var(--bs-blue);" href="/dashboard/settings">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="1em"
+                                height="1em"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icon-tabler-settings"
+                                style="margin-bottom: 4px;"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"
+                                ></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            Settings
                         </a>
                     </span>
                 </div>
@@ -110,23 +124,23 @@
         <section class="highlight-clean">
             <div class="container">
                 {% autoescape false %} {{ popup }} {% endautoescape %}
-                <div class="intro" style="max-width: 100%;">
+                <div class="intro" style="max-width: 100%; margin-top: 20px;">
                     <h2 class="text-start" style="font-size: 30px; color: rgb(0, 0, 0);">Your Subscribers</h2>
                     <p class="text-start" style="margin-top: -20px; margin-bottom: 35px;">Here are your current newsletter subscribers.</p>
                     <div class="row" style="margin-bottom: 40px;">
                         <div class="col">
-                            <div class="card" style="background: #f0f0f0;">
+                            <div class="card" style="background: rgb(235, 235, 235);">
                                 <div class="card-body">
                                     <h4 class="card-title" style="font-size: 18px;">Your Subscribers</h4>
-                                    <p class="card-text" style="font-size: 38px; color: rgb(0, 0, 0); margin-top: -12px; margin-bottom: -10px;">{{ total_subscribers }}</p>
+                                    <p class="card-text" style="font-size: 38px; color: rgb(0, 0, 0); margin-top: -12px; margin-bottom: -10px;">{{ total_subscribers }}<br /></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card" style="background: #f0f0f0;">
+                            <div class="card" style="background: rgb(235, 235, 235);">
                                 <div class="card-body">
-                                    <h4 class="card-title" style="font-size: 18px;">New Subscribers this Month</h4>
-                                    <p class="card-text" style="font-size: 38px; color: rgb(0, 0, 0); margin-top: -12px; margin-bottom: -10px;">{{ monthly_subscribers }}</p>
+                                    <h4 class="card-title" style="font-size: 18px;">New Subscribers this month</h4>
+                                    <p class="card-text" style="font-size: 38px; color: rgb(0, 0, 0); margin-top: -12px; margin-bottom: -10px;">{{ monthly_subscribers }}<br /></p>
                                 </div>
                             </div>
                         </div>
@@ -148,10 +162,15 @@
                 </div>
             </div>
         </section>
+        <footer class="footer-basic">
+            <ul class="list-inline" style="font-size: 14px;">
+                <li class="list-inline-item"><a href="https://github.com/berrysauce/microletter" target="_blank">Source</a></li>
+                <li class="list-inline-item"><a href="https://github.com/berrysauce/microletter/releases" target="_blank">Updates</a></li>
+                <li class="list-inline-item"><a href="https://docs.microletter.cc/" target="_blank">Help</a></li>
+                <li class="list-inline-item"><a href="https://github.com/berrysauce/microletter/blob/main/LICENSE.md" target="_blank">License</a></li>
+            </ul>
+        </footer>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/script.min.js"></script>
     </body>
-    
-    <footer>
-        <p style="text-align: center; color: gray;"><a href="https://github.com/berrysauce/microletter" target="_blank" style="color: darkgray;">Source</a> | <a href="https://github.com/berrysauce/microletter/blob/main/LICENSE.md" target="_blank" style="color: darkgray;">License</a> | <a href="https://github.com/berrysauce/microletter/releases" target="_blank" style="color: darkgray;">Updates</a></p>
-    </footer>
 </html>

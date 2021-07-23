@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="/assets/css/easymde.min.css" />
+        <script src="/assets/js/easymde.min.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png" />
+        <link rel="manifest" href="/assets/img/site.webmanifest" />
+        <link rel="shortcut icon" href="/assets/img/favicon.ico" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-config" content="/assets/img/browserconfig.xml" />
+        <meta name="theme-color" content="#ffffff" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-        <meta name="description" content="{{ newsletter_description }}">
-        <title>Subscribe to {{ newsletter_title }}</title>
+        <title>{{ newsletter_title }}</title>
+        <meta name="description" content="{{ newsletter_description }}" />
+        <meta name="keywords" content="newsletter, {{ newsletter_title }}" />
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/styles.min.css" />
     </head>
+
     <body style="color: rgb(33, 37, 41);">
         <section class="newsletter-subscribe">
-            <div class="container" style="margin-top: 0px;">
+            <div class="container" style="margin-top: 2vh;">
                 <div class="intro" style="margin-top: 140px;">
                     <h2 class="text-center" style="font-size: 48px; line-height: 55px; color: rgb(0, 0, 0);">Subscribe to {{ newsletter_title }}</h2>
-                    <p class="text-center" style="color: rgb(54, 54, 54);">{{ newsletter_description }}</p>
+                    <p class="text-center" style="color: rgb(54, 54, 54);">{{ newsletter_description }}<br /></p>
                 </div>
                 <form class="d-flex justify-content-center flex-wrap" method="post" enctype="multipart/form-data" action="/subscribe">
                     <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Your Email" required="" /></div>
-                    <div class="mb-3"><button class="btn btn-primary" type="submit">Subscribe</button></div>
+                    <div class="mb-3"><button class="btn" type="submit" style="border: 2px solid rgb(30, 107, 222); border-radius: 5px; color: var(--bs-blue); padding-top: 14px; padding-bottom: 14px;">Subscribe</button></div>
                 </form>
-                <div class="intro" style="margin-top: 200px;">
-                    <p class="text-center" style="color: rgb(165, 172, 176);"><a href="/dashboard/home">Go to your Dashboard</a> - <a href="{{ privacy_link }}">Privacy</a> - Copyright {{ footer_year }} {{ newsletter_title }}</p>
-                </div>
             </div>
         </section>
+        <footer class="footer-basic">
+            <ul class="list-inline" style="font-size: 14px; margin-top: 25vh;">
+                <li class="list-inline-item"><a href="/dashboard/home">Dashboard</a></li>
+                <li class="list-inline-item"><a href="{{ privacy_link }}">Privacy</a></li>
+            </ul>
+            <p class="copyright" style="padding-top: 0px; margin-top: 5px;">{{ newsletter_title }} © {{ footer_year }}</p>
+        </footer>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/script.min.js"></script>
     </body>
 </html>

@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import smtplib, ssl
 
 load_dotenv()
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 deta = Deta()
 
 app.mount("/assets", StaticFiles(directory="templates/assets"), name="assets")
@@ -192,17 +192,18 @@ async def get_settings(request: Request, show: Optional[str] = None):
         popup_html = """"""
     
     configdata = configdata[0]
-    return templates.TemplateResponse("settings.html", {"request": request, 
-                                                        "popup": popup_html, 
-                                                        "form_title": configdata["newsletter-title"], 
-                                                        "form_tagline": configdata["newsletter-tagline"], 
-                                                        "form_description": configdata["newsletter-description"],
-                                                        "form_fade1": configdata["color-fade1"],
-                                                        "form_fade2": configdata["color-fade2"],
-                                                        "form_titletext": configdata["color-title"],
-                                                        "form_name": configdata["privacy-name"],
-                                                        "form_privacy": configdata["privacy-link"],
-                                                        "form_address": configdata["privacy-address"]})
+    return templates.TemplateResponse("settings.html", 
+        {"request": request, 
+        "popup": popup_html, 
+        "form_title": configdata["newsletter-title"], 
+        "form_tagline": configdata["newsletter-tagline"], 
+        "form_description": configdata["newsletter-description"],
+        "form_fade1": configdata["color-fade1"],
+        "form_fade2": configdata["color-fade2"],
+        "form_titletext": configdata["color-title"],
+        "form_name": configdata["privacy-name"],
+        "form_privacy": configdata["privacy-link"],
+        "form_address": configdata["privacy-address"]})
 
 @app.get("/setup", response_class=HTMLResponse)
 async def get_setup():

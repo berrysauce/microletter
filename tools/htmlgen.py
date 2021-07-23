@@ -46,7 +46,7 @@ def subscribertable():
             monthly_subscribers += 1
         delete_link = "/dashboard/subscribers/delete/{0}".format(entry["key"])
         table_html = table_html + """
-        <tr><td>{0}</td><td>{1}</td><td class="d-xxl-flex justify-content-xxl-end"><a class="btn btn-primary" role="button" style="background: var(--bs-red);border-color: var(--bs-red);border-radius: 5px;font-size: 12px;" href="{2}"><strong><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-trash" style="font-size: 20px;color: rgb(255,255,255);">
+        <tr><td>{0}</td><td>{1}</td><td class="d-xxl-flex justify-content-xxl-end"><a class="btn btn-primary" role="button" style="background: var(--bs-white);border: 2px solid var(--bs-red);border-radius: 5px;font-size: 12px;" href="{2}"><strong><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-trash" style="font-size: 20px;color: var(--bs-red);">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <line x1="4" y1="7" x2="20" y2="7"></line>
         <line x1="10" y1="11" x2="10" y2="17"></line>

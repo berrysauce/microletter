@@ -123,7 +123,8 @@
         </nav>
         <section class="newsletter-subscribe" style="margin-top: -20px;">
             <div class="container">
-                <div class="intro" style="margin-top: 10px; max-width: 100%;">
+                {% autoescape false %} {{ popup }} {% endautoescape %}
+                <div class="intro" style="margin-top: 20px; max-width: 100%;">
                     <h2 class="text-start" style="color: rgb(0, 0, 0); margin-bottom: 0px; font-size: 32px; border-color: rgb(0, 0, 0);">Settings</h2>
                     <form method="post" action="/dashboard/settings/save?dest=settings" enctype="multipart/form-data">
                         <p style="margin-top: 5px; font-size: 18px;">Configure your microletter here.</p>

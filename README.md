@@ -10,8 +10,9 @@
 # microletter
 A micro newsletter service 📨
 
-* **Homepage:** https://microletter.cc
-* **Documentation:** https://docs.microletter.cc
+* 🏠 **Homepage:** https://microletter.cc
+* 📘 **Documentation:** https://docs.microletter.cc
+* 🪐 **Install on Deta Space:** https://deta.space/discovery/microletter
 
 ## Installation
 > ⚠ **WARNING:** All dashboard links are accessable by ANYONE currently. Sensitive information might be viewable by anyone.

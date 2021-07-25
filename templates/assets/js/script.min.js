@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){[].slice.call(document.querySelectorAll("[data-bss-tooltip]")).map((function(t){return new bootstrap.Tooltip(t)}))}),!1);

@@ -129,6 +129,28 @@
                     <form method="post" action="/dashboard/settings/save?dest=settings" enctype="multipart/form-data">
                         <p style="margin-top: 5px; font-size: 18px;">Configure your microletter here.</p>
                         <div class="col" style="margin-top: 50px;">
+                            <h3 style="font-size: 20px;">SMTP Credentials</h3>
+                            <p style="margin-bottom: 0px;">These need to be valid so your emails get sent correctly.</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="1em"
+                                height="1em"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icon-tabler-checkbox"
+                                style="color: var(--bs-blue); margin-bottom: 4px; margin-right: 5px;"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <polyline points="9 11 12 14 20 6"></polyline>
+                                <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9"></path>
+                            </svg>
+                            <a style="margin-top: 10px;" href="/dashboard/settings/test" id="test-link" target="_blank">Test the credentials</a>
+                        </div>
+                        <div class="col" style="margin-top: 50px;">
                             <h3 style="font-size: 20px;">Newsletter customization</h3>
                             <p style="margin-bottom: 0px;">These will be visible on the subscribe page and in your emails.</p>
                             <input class="form-control" type="text" name="title" value="{{ form_title }}" placeholder="Newsletter Title" style="margin-top: 10px;" />

@@ -25,6 +25,7 @@ app.mount("/verify/assets", StaticFiles(directory="templates/assets"), name="ass
 app.mount("/unsubscribe/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/dashboard/assets", StaticFiles(directory="templates/assets"), name="assets")
 app.mount("/dashboard/editor/assets", StaticFiles(directory="templates/assets"), name="assets")
+app.mount("/dashboard/settings/assets", StaticFiles(directory="templates/assets"), name="assets")
 templates = Jinja2Templates(directory="templates")
 subscribers = deta.Base("microletter-subscribers")
 posts = deta.Base("microletter-posts")

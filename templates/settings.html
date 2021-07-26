@@ -179,8 +179,14 @@
                             <h3 style="font-size: 20px;">Legal settings</h3>
                             <p style="margin-bottom: 0px;">These settings are required by a lot of countries. The privacy policy link will be visible on the subscribe page and the name/address in your emails.</p>
                             <input class="form-control" type="text" name="name" value="{{ form_name }}" placeholder="Your Name" style="margin-top: 10px;" />
-                            <input class="form-control" type="url" name="privacy" value="{{ form_privacy }}" placeholder="Privacy Policy Link" style="margin-top: 10px;" />
                             <input class="form-control" type="text" name="address" value="{{ form_address }}" placeholder="Your Address" style="margin-top: 10px;" />
+                            <p style="margin-top: 25px; margin-bottom: 15px;">Your Privacy Policy. You can generate one at <a href="https://getterms.io" target="_blank">GetTerms.io</a> (Not affiliated).</p>
+                            <textarea class="form-control" style="margin-top: 10px; min-width: 100%; min-height: 300px;" name="privacy" id="privacy-policy"></textarea>
+                            <script>
+                                let privacy = `{{ form_privacy }}`
+                                privacy.toString()
+                                var easyMDE = new EasyMDE({ element: document.getElementById("privacy-policy"), initialValue: privacy });
+                            </script>
                         </div>
                         <button class="btn btn-primary" type="submit" style="margin-top: 35px;">SAVE</button>
                     </form>

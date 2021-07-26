@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/assets/css/easymde.min.css" />
+        <script src="/assets/js/easymde.min.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png" />
+        <link rel="manifest" href="/assets/img/site.webmanifest" />
+        <link rel="shortcut icon" href="/assets/img/favicon.ico" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-config" content="/assets/img/browserconfig.xml" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <title>microletter</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="assets/css/styles.min.css" />
+    </head>
+
+    <body>
+        <section class="highlight-clean">
+            <div class="container">
+                <div style="min-width: 100%;">
+                    {% autoescape false %} {{ privacy }} {% endautoescape %}<br />
+                    <br />
+                    <button class="btn btn-primary" type="button" style="background: rgb(255, 255, 255); color: rgb(162, 162, 162); border-color: rgb(204, 204, 204);" onclick="history.back()">Go back</button>
+                </div>
+            </div>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

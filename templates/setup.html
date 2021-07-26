@@ -13,7 +13,7 @@
         <meta name="theme-color" content="#ffffff" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-        <title>microletter - Setup</title>
+        <title>microletter</title>
         <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="assets/css/styles.min.css" />
     </head>
@@ -34,12 +34,12 @@
             <div class="container">
                 <form method="post" action="/dashboard/settings/save" enctype="multipart/form-data">
                     <div>
-                        <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 1</span> Email</h2>
+                        <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 1</span>&nbsp;Email</h2>
                         <p class="text-start" style="margin-top: -15px;">
                             To send your newsletter, you need to enter your Email credentials so your microletter installation can send Emails to your subscribers. Don't worry, microletter can only send Emails.
                             <strong>It's recommended to create a seperate Email address to send your newsletter from.</strong><br />
                             <br />
-                            Don't know where to find your SMTP credentials? <a href="https://docs.microletter.cc/guides/how-to-get-your-smtp-credentials" target="_blank">Click here</a>.
+                            Don't know where to find your SMTP&nbsp;credentials? <a href="https://docs.microletter.cc/guides/how-to-get-your-smtp-credentials" target="_blank">Click here</a>.
                         </p>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -62,27 +62,32 @@
                     </div>
                     <div style="margin-top: 35px;">
                         <hr />
-                        <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 2</span> Newsletter</h2>
+                        <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 2</span>&nbsp;Newsletter</h2>
                         <p class="text-start" style="margin-top: -15px;">Now comes the fun part. Here you can customize what your newsletter should look like.</p>
                         <input class="form-control" type="text" name="title" placeholder="Newsletter Name" style="margin-top: 10px; max-width: 400px;" required="" />
                         <input class="form-control" type="text" name="tagline" placeholder="Short Description" style="margin-top: 10px; max-width: 400px;" required="" maxlength="200" />
                         <textarea class="form-control" style="width: 100%; margin-top: 10px; min-height: 100px;" name="description" placeholder="Long Description" required="" maxlength="400"></textarea>
-                        <div class="alert alert-warning" role="alert" style="margin-top: 30px; max-height: 40px; padding-top: 8px;"><span>It's a known problem, that a title in white can be invisible in some email clients. </span></div>
+                        <div class="alert alert-warning" role="alert" style="margin-top: 30px; max-height: 40px; padding-top: 8px;"><span>It's a known problem, that a title in white can be invisible in some email clients.&nbsp;</span></div>
                         <p style="margin-top: 15px;">
-                            Header colors: <input class="form-control form-control-color" type="color" required="" name="fade1" />fades to <input class="form-control form-control-color" type="color" required="" name="fade2" />
+                            Header colors:&nbsp; &nbsp; &nbsp;<input class="form-control form-control-color" type="color" required="" name="fade1" />fades to&nbsp;&nbsp;
+                            <input class="form-control form-control-color" type="color" required="" name="fade2" />
                         </p>
-                        <p style="margin-top: 10px;">Title Color: <input class="form-control form-control-color" type="color" required="" name="titletext" /></p>
+                        <p style="margin-top: 10px;">Title Color:&nbsp; &nbsp; &nbsp;<input class="form-control form-control-color" type="color" required="" name="titletext" /></p>
                     </div>
                     <div style="margin-top: 35px;">
                         <hr />
-                        <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 3</span> Legal</h2>
+                        <h2 class="text-start d-xl-flex align-items-xl-center" style="color: rgb(72, 72, 72);"><span class="badge bg-primary" style="font-size: 14px;">STEP 3</span>&nbsp;Legal</h2>
                         <p class="text-start" style="margin-top: -15px;">
                             To comply to the most international laws, you need to fill out the following information. Your name will be used for the copyright message at the end of the page and your address will be added to the end of your
                             emails.
                         </p>
-                        <input class="form-control" type="text" name="name" placeholder="Your Full Name" style="margin-top: 10px; max-width: 400px;" required="" />
-                        <input class="form-control" type="url" style="margin-top: 10px; max-width: 400px;" name="privacy" placeholder="Link to your Privacy Policy" required="" />
-                        <input class="form-control" type="text" name="address" placeholder="Your Address" style="margin-top: 10px; width: 100%;" required="" maxlength="200" />
+                        <input class="form-control" type="text" name="name" placeholder="Your Full Name" style="margin-top: 10px; width: 25%;" required="" />
+                        <input class="form-control" type="text" name="address" placeholder="Your Address" style="margin-top: 10px; width: 70%;" required="" maxlength="200" />
+                        <p style="margin-top: 25px; margin-bottom: 15px;">Your Privacy Policy. You can generate one at <a href="https://getterms.io" target="_blank">GetTerms.io</a> (Not affiliated).</p>
+                        <textarea class="form-control" style="margin-top: 10px; min-width: 100%; min-height: 300px;" name="privacy" id="privacy-policy"></textarea>
+                        <script>
+                          var easyMDE = new EasyMDE({ element: document.getElementById("privacy-policy") });
+                        </script>
                     </div>
                     <p class="text-start" style="margin-top: 50px;"><strong>Remember:</strong> You can change these settings later in the settings menu in your dashboard.</p>
                     <button class="btn btn-primary" type="submit" style="margin-top: 0px; margin-bottom: 20px;">I'M DONE!</button>
@@ -98,6 +103,5 @@
             </ul>
         </footer>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/script.min.js"></script>
     </body>
 </html>

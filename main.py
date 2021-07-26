@@ -68,7 +68,7 @@ async def add_no_cache(request: Request, call_next):
 async def get_root(request: Request):
     if len(config.fetch(None).items) == 0:
         return RedirectResponse(url="/setup", status_code=status.HTTP_303_SEE_OTHER)
-    return templates.TemplateResponse("index.html", {"request": request, "newsletter_title": configuration.get("newsletter-title"), "newsletter_description": configuration.get("newsletter-description"), "privacy_link": configuration.get("privacy-link"), "footer_year": str(datetime.now().strftime("%Y"))})
+    return templates.TemplateResponse("index.html", {"request": request, "newsletter_title": configuration.get("newsletter-title"), "newsletter_description": configuration.get("newsletter-description"), "footer_year": str(datetime.now().strftime("%Y"))})
 
 @app.post("/subscribe")
 async def post_subscribe(request: Request, email: str = Form(...)):
@@ -131,6 +131,9 @@ async def get_unsubscribe(request: Request, key: Optional[str] = None):
         html_content = f.read()
     return HTMLResponse(content=html_content, status_code=200)
 
+@app.get("/privacy")
+async def get_privacy(request: Request):
+    return templates.TemplateResponse("privacy.html", {"request": request, "privacy": configuration.get("privacy-html")})
     
 
 """
@@ -203,7 +206,7 @@ async def get_settings(request: Request, show: Optional[str] = None):
         "form_fade2": configdata["color-fade2"],
         "form_titletext": configdata["color-title"],
         "form_name": configdata["privacy-name"],
-        "form_privacy": configdata["privacy-link"],
+        "form_privacy": configdata["privacy-markdown"],
         "form_address": configdata["privacy-address"]})
 
 @app.get("/setup", response_class=HTMLResponse)
@@ -314,9 +317,17 @@ async def post_settings_save(
     fade2: str = Form(...), 
     titletext: str = Form(...), 
     name: str = Form(...), 
-    privacy: str = Form(...), 
+    privacy: str = Form(None), 
     address: str = Form(...)
     ):
+    if privacy is None:
+        privacy = "No privacy policy was configured."
+        
+    try:
+        soup = BeautifulSoup(privacy, 'lxml')
+        privacy = soup.get_text()
+    except:
+        privacy = privacy
     data = {
         "newsletter-title": title,
         "newsletter-tagline": tagline,
@@ -325,7 +336,8 @@ async def post_settings_save(
         "color-fade2": fade2,
         "color-title": titletext,
         "privacy-name": name,
-        "privacy-link": privacy,
+        "privacy-markdown": privacy,
+        "privacy-html": markdown.markdown(privacy),
         "privacy-address": address
     }
     if dest == "settings":

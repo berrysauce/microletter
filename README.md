@@ -39,6 +39,20 @@ Go to yourdomain.com/dashboard and you'll be redirected to your dashboard.
 - Thanks to lonaru for making EasyMDE (used as the Markdown Editor) Check it out here: https://github.com/Ionaru/easy-markdown-editor
 
 ## License
-Currently, microletter is licensed under Copyright. This might change later.
+microletter is a self-hostable Newsletter service.
+Copyright (C) 2021 Paul Haedrich (berrysauce)
 
-© (Copyright) 2021, Paul Haedrich (berrysauce). All rights reserved. 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+For questions, contact microletter@berrysauce.me.

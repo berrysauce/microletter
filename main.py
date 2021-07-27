@@ -181,7 +181,7 @@ async def get_subscribers(request: Request, show: Optional[str] = None):
         popup_html = """"""
     
     subscribers_html, total, monthly = htmlgen.subscribertable()
-    return templates.TemplateResponse("subscribers.html", {"request": request, "popup": popup_html, "total_subscribers": total, "monthly_subscribers": monthly, "subscribers": subscribers_html})
+    return templates.TemplateResponse("subscribers.html", {"request": request, "popup": popup_html, "total_subscribers": total, "monthly_subscribers": monthly, "invite_link": mailer.deta_url(), "subscribers": subscribers_html})
 
 @app.get("/dashboard/settings")
 async def get_settings(request: Request, show: Optional[str] = None):

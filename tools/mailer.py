@@ -24,6 +24,7 @@ def deta_url():
     
 def get_env():
     try:
+        load_dotenv()
         smtp_email = str(os.getenv("SMTP_USERNAME"))
         smtp_password = str(os.getenv("SMTP_PASSWORD"))
         smtp_server = str(os.getenv("SMTP_SERVER"))

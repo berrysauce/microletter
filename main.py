@@ -289,12 +289,12 @@ async def get_home_delete(key: str):
 
 @app.get("/dashboard/settings/test")
 async def get_setup_test(request: Request):
-    load_dotenv()
-    password = str(os.getenv("SMTP_PASSWORD"))
-    username = str(os.getenv("SMTP_USERNAME"))
-    server = str(os.getenv("SMTP_SERVER"))
-    port = int(os.getenv("SMTP_PORT"))
     try:
+        try:
+            load_dotenv()
+            username, password, server, port = mailer.get_env()
+        except:
+            raise Exception("The enviroment variables are empty.") 
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(server, port, context=context) as server:
             server.login(username, password)

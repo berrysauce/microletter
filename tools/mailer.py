@@ -104,7 +104,7 @@ def send(data):
     message["Subject"] = "{0} | {1}".format(data["post_title"], configuration.get("newsletter-title"))
     
     entries = subscribers.fetch({"verified": True}).items
-    with open("templates/emails/newsletter.html", "r") as f:
+    with open("templates/emails/newsletterv2.html", "r") as f:
             html_content = jinja2.Template(f.read())
             
     receivers = []

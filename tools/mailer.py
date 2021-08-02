@@ -113,13 +113,15 @@ def send(data):
     
     message["From"] = sender_email
     message["To"] = sender_email
+    
+    # RE-ADD FOR NEWSLETTER TEMPLATE V1
+    #"fade1": configuration.get("color-fade1"),
+    #"fade2": configuration.get("color-fade2"),
+    #"titlecolor": configuration.get("color-title"),
         
     email_data={
         "newsletter_title": configuration.get("newsletter-title"),
         "newsletter_tagline": configuration.get("newsletter-tagline"),
-        "fade1": configuration.get("color-fade1"),
-        "fade2": configuration.get("color-fade2"),
-        "titlecolor": configuration.get("color-title"),
         "post_title": data["post_title"],
         "post_date": data["post_date"],
         "post_content": data["post_content"],

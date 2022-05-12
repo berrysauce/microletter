@@ -300,7 +300,7 @@ async def get_setup_test(request: Request):
         return templates.TemplateResponse("success.html", {"request": request, "title": title, "description": description})
     except Exception as e:
         title = "Credential error!"
-        description = "Failed to connect to the SMPT server. Error: {0}".format(e)
+        description = "Failed to connect to the SMTP server. Error: {0}".format(e)
         return templates.TemplateResponse("error.html", {"request": request, "title": title, "description": description})
     
 @app.post("/dashboard/settings/save")

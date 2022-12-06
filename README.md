@@ -56,5 +56,3 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 For questions, contact microletter@berrysauce.me.
-
-<a href="https://deta.sh/?ref=microletter" target="_blank"><img src="https://cdn.berrysauce.me/assets/deta-sponsor-banner.jpg" alt="Sponsored by Deta"></a>
